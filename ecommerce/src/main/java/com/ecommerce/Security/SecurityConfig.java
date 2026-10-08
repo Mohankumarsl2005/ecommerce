@@ -1,4 +1,3 @@
-
 package com.ecommerce.Security;
 
 import org.springframework.context.annotation.Bean;
@@ -33,14 +32,14 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/users/**").permitAll()
-                        .requestMatchers("/products/**").permitAll()
+                        .requestMatchers("/products/**").authenticated()
                         .anyRequest().authenticated()
-                );
+                )
 
-        http.addFilterBefore(
-                jwtAuthenticationFilter,
-                UsernamePasswordAuthenticationFilter.class
-        );
+                .addFilterBefore(
+                        jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                );
 
         return http.build();
     }

@@ -1,13 +1,14 @@
 package com.ecommerce.Service;
 
-import com.ecommerce.Security.JwtService;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.Repository.UserRepository;
-import com.ecommerce.entity.User;
 import com.ecommerce.Security.JwtService;
-@Service 
+import com.ecommerce.entity.User;
+
+@Service
 public class UserService {
+
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
@@ -20,12 +21,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String login(String email, String password){
+    public String login(String email, String password) {
+
         User user = userRepository.findByEmail(email);
 
-        if (user==null){
-            throw new RuntimeException("Invalid email or password");
-        }if (!user.getPassword().equals(password)){
+        if (user == null || user.getPassword() == null ||
+                !user.getPassword().equals(password)) {
+
             throw new RuntimeException("Invalid email or password");
         }
 
